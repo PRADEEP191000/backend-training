@@ -1,10 +1,13 @@
 const printDate=function(){
- const d=new Date();
-     console.log(d);
+ let currentDate=new Date();
+     currentDate=currentDate.getDate()
+     console.log("current date is:",currentDate);
      }
 const printMonth=function(){
-    const m=new Date(2022,8);
-    console.log(m)
+    let currentMonth=new Date();
+    currentMonth=currentMonth.getMonth();
+    currentMonth=currentMonth + 1;
+    console.log("the current Month is:",currentMonth)
 }
 const getBatchInfo=function(){
     let text="Plutonium Cohort, W3D3, the topic for today is Nodejs module system"
