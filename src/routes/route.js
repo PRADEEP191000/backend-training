@@ -28,7 +28,7 @@ router.get('/test-me',function(req,res){
       }let months = chunk(array, 3);
       console.log(months);
 
-      //Problem - 4 2nd step===============
+      //============Problem - 4 2nd step===============//
 
        const arrOdd= [1,3,5,7,9,11,13,15,17,19];
        let odds=lodash.tail(arrOdd)
@@ -41,7 +41,7 @@ router.get('/test-me',function(req,res){
     res.send('Welcome to my assignment.')
 })
 
-
+//=======================================================================//
 
 router.get('/test-you',function(req,res){
     res.send('My  first route implementatin ever api!')
@@ -55,6 +55,7 @@ router.get('/students', function (req, res) {
     res.send(students)
 });
 
+//========================================================================//
 
 router.get('/student-details/:name', function(req, res){
     console.log("this is the request "+JSON.stringify(req.params));
@@ -62,14 +63,103 @@ router.get('/student-details/:name', function(req, res){
     let studentName =reqParams.name
     console.log('Name of the student is',studentName)
     let studentDetails=studentName + ' ' +studentName
-
-
     res.send(studentDetails)
 })
 
 router.get('/give-me-students-data',function(req, res){
 
 });
+
+
+//=====================assignment/get-api==Problem-1===============// 
+
+router.get('/movies', function(req,res){
+  let movies=['Rang de basanti', "Sanam teri kasam", "Bahubali", "commondo"];
+  console.log(movies)
+  res.send(movies)
+
+});
+
+//===================get-api===Problem-2/3=======================//
+
+router.get('/movies/:indexNumber',function(req,res){
+
+  let movies=['Rang de basanti', "The shining","Batman begines", "Sanam teri kasam", "Bahubali", "commondo"];
+  let indexOfMovies=req.params.indexNumber;
+  if (indexOfMovies < 0 || indexOfMovies > movies.length){
+    res.send("Please insert valid index");
+  }else{
+    res.send(movies[indexOfMovies])
+  }
+
+});
+
+//====================get-api===Problem-4=======================//
+
+router.get('/films', function(req,res){
+
+  let movieArr=[ {
+    'id': 1,
+    'name': 'The Shining'
+   }, {
+    'id': 2,
+    'name': 'Incendies'
+   }, {
+    'id': 3,
+    'name': 'Rang de Basanti'
+   }, {
+    'id': 4,
+    'name': 'Finding Nemo'
+   },{
+    "id":5,
+    "name":"commondo"
+   },{
+    "id": 6,
+   "name": "sanam teri kasam"
+   }];
+
+   res.send(movieArr);
+
+  });
+
+  //==========================get-api===Problem-5======================//
+
+router.get('/films/:filmId',function(req,res){
+
+  let movieArr=[ {
+    'id': 1,
+    'name': 'The Shining'
+   }, {
+    'id': 2,
+    'name': 'Incendies'
+   }, {
+    'id': 3,
+    'name': 'Rang de Basanti'
+   }, {
+    'id': 4,
+    'name': 'Finding Nemo'
+   },{
+    "id":5,
+    "name":"commondo"
+   },{
+    "id": 6,
+   "name": "sanam teri kasam"
+   }];
+
+   let idOfMovieArr=req.params.filmId;
+   if (idOfMovieArr < 1 || idOfMovieArr > movieArr.length){
+    res.send('No movie exists with this id');
+   }else{
+  
+    res.send(movieArr[idOfMovieArr-1].name)
+    
+   }
+
+
+})
+
+
+
 
 module.exports = router;
 // adding this comment for no reason
