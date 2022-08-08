@@ -35,6 +35,23 @@ router.get('/test-me',function(req,res){
      
       console.log(odds);
 
+      //Problem- 4 3rd step======================
+      const arr1=[1,2,]
+      const arr2=[1,2,3,4]
+      const arr3=[1,2,3,4,5,6]
+      const arr4=[1,2,3,4,5,6,7,8]
+      const arr5=[1,2,3,4,5,6,7,8,9,10]
+      let arrUnion=lodash.union(arr1,arr2,arr3,arr4,arr5);
+      console.log(arrUnion);
+
+      //Problem - 4 last step=========
+
+      let arrObject=[ ['firstName','Pradeep'],["lastName","Gupta"],["emailID","pradeepgupta191000@gmail.com"]]
+      let frPairs=lodash.fromPairs(arrObject);
+      console.log(frPairs)
+
+
+
     
 
       
