@@ -1,6 +1,8 @@
 const express = require('express');
 const myHelper = require('../util/helper')
-const underscore = require('underscore')
+const underscore = require('underscore');
+const { append } = require('express/lib/response');
+const app = express();
 
 const router = express.Router();
 
@@ -57,8 +59,8 @@ router.get('/candidates/:canidatesName', function(req, res){
 router.get("/films", function(req, res){
     const films = [ {
         "id": 1,
-        "name": "The Shining"
-       }, {
+    "name": "The Shining"
+      }, {
         "id": 2,
         "name": "Incendies"
        }, {
@@ -101,7 +103,64 @@ router.get("/films/:filmId", function(req, res){
 
        //if there is no match give an error response
        res.send("The film id doesn't match any movie")
-})
+});
+//=====================app.get==sol-1=========================//
 
-module.exports = router;
+app.get('/sol-1',function(req,res){
+    // function missNumber(){
+    //     let arr=[1,2,3,5,6,7];
+    // let n=arr.length;
+    // for(let i=0; i<= n; i++){
+    //   let sum=sum+i;
+    // let total=n*(n+1)/2
+    // let missNumber=total-sum;
+    //  return res.send(missNumber)
+      
+    let arr= [1,2,3,5,6,7]
+ 
+   let total = 0;
+   for (var i in arr) {
+       total += arr[i];
+   }
+ 
+   let lastDigit= arr.pop()
+   let consecutiveSum= lastDigit * (lastDigit+1) / 2
+   let missingNumber= consecutiveSum - total
+ 
+   res.send(  { data: missingNumber  }  );
+ });
+
+//==========================app.get==sol-2==================================//
+    
+    app.get('/sol-2', function(req,res){
+
+        let arr= [33, 34, 35, 37, 38]
+        let len= arr.length
+      
+        let total = 0;
+        for (var i in arr) {
+            total += arr[i];
+        }
+      
+        let firstDigit= arr[0]
+        let lastDigit= arr.pop()
+        let consecutiveSum= (len + 1) * (firstDigit+ lastDigit ) / 2
+        let missingNumber= consecutiveSum - total
+       
+        res.send(  { data: missingNumber  }  );
+
+      });
+     
+
+    
+
+
+
+
+
+
+
+
+module.exports = app;
+//module.exports=router;
 // adding this comment for no reason
