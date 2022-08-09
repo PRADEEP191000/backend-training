@@ -146,15 +146,13 @@ router.get('/films/:filmId',function(req,res){
    "name": "sanam teri kasam"
    }];
 
-   let idOfMovieArr=req.params.filmId;
-   if (idOfMovieArr < 1 || idOfMovieArr > movieArr.length){
-    res.send('No movie exists with this id');
-   }else{
-  
-    res.send(movieArr[idOfMovieArr-1].name)
-    
-   }
-
+   let filmId=req.params.filmId;
+  for (let i=0; i<= movieArr.length; i++){
+    if (movieArr.id==filmId){
+      return res.send(movieArr[i])
+    }
+  }
+  res.send("Invalid movies id")
 
 })
 
