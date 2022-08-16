@@ -3,7 +3,22 @@ const myHelper = require('../util/helper')
 const underscore = require('underscore');
 const { append } = require('express/lib/response');
 const app = express();
+const { default: mongoose } = require('mongoose');
 
+
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+const authorController = require("../controllers/authorController")
+const bookController = require("../controllers/bookController");
+
+router.post("/createBook", bookController.createBook)
+
+router.get("/getBooksData", bookController.getBooksData)
+
+
+
+app.use('/', route);
 const router = express.Router();
 
 router.get('/test-me', function (req, res) {
@@ -107,14 +122,7 @@ router.get("/films/:filmId", function(req, res){
 //=====================app.get==sol-1=========================//
 
 app.get('/sol-1',function(req,res){
-    // function missNumber(){
-    //     let arr=[1,2,3,5,6,7];
-    // let n=arr.length;
-    // for(let i=0; i<= n; i++){
-    //   let sum=sum+i;
-    // let total=n*(n+1)/2
-    // let missNumber=total-sum;
-    //  return res.send(missNumber)
+
       
     let arr= [1,2,3,5,6,7]
  
@@ -150,17 +158,123 @@ app.get('/sol-1',function(req,res){
         res.send(  { data: missingNumber  }  );
 
       });
-     
+     //=============================post-api==============================//
 
+     
+let players =
+[
+    {
+        "name": "Jhanvi",
+        "dob": "1/1/1995",
+        "gender": "male",
+        "city": "jalandhar",
+        "sports": [
+            "swimming"
+        ]
+    },
+    {
+        "name": "Ayush Adhikari",
+        "dob": "1/09/1995",
+        "gender": "male",
+        "city": "delhi",
+        "sports": [
+            "soccer"
+        ],
+    },
+    {
+        "name": "Sunil Chhtri",
+        "dob": "1/1/1990",
+        "gender": "male",
+        "city": "mumbai",
+        "sports": [
+            "soccer"
+        ],
+    },
+    {
+        name: 'Sajan Prakash',
+        dob: '14/09/1993',
+        gender: 'male',
+        city: 'Kerala',
+        sports: [ 'swimming' ]
+      },
+]
+
+router.post('/players', function (req, res) {
+
+    //LOGIC WILL COME HERE
+   let newPlayer=req.body
+   let newPlayerName=newPlayer.name
+   let isNameRepeated=false
+
+   for(let i=0; i<players.length; i++){
+    if (players[i].name==newPlayerName){
+        isNameRepeated=true;
+        break;
+    }
+   }
+   
+   if(isNameRepeated){
+    res.send("This players was already exists.")
+
+   }
+   else{
+    players.push(newPlayer)
+    res.send(players)
+   }
+    res.send(  { data: players , status: true }  )
+})
+//==================================================================================//
+let persons = [
+
+    {
+        nane: "PK",
+
+        age: 10, votingStatus: false
+    },
+
+    {
+        nane: "SK",
+
+        age: 20,
+
+        votingStatus: false
+    },
+
+    {
+        nane: "AA", age: 70,
+
+        votingStatus: false
+    },
+
+    {
+        nane: "SC",
+
+        age: 5, votingStatus: false
+    },
+
+    {
+        name: "HO",
+
+        age: 40,
+
+        votingStatus: false
+    }
+];
+router.post('/persons',function(req,res){
+    let personCanVote=[];
+    let votingAge = req.query.inputAge;
+    for(let i=0; i<persons.length; i++){
+        let personAge=persons[i].age;
+        if (personAge>votingStatus){
+            persons[i].votingStatus=true;
+        }
+    }
+    personCanVote=persons.filter((person)=>person.age > votingAge);
+    res.send(personCanVote);
+})
     
 
 
-
-
-
-
-
-
-module.exports = app;
-//module.exports=router;
+//module.exports = app;
+module.exports=router;
 // adding this comment for no reason

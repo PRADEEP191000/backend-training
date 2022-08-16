@@ -8,6 +8,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+mongoose.connect("mongodb+srv://Pradeep-Gupta:6PH0dUNAiPGvIVDp@cluster0.imx3g.mongodb.net/FAPT191-DB?retryWrites=true&w=majority", {
+        useNewUrlParser: true
+    })
+    .then(() => console.log("MongoDb is connected"))
+    .catch(err => console.log(err))
+
 app.use('/', route);
 
 app.listen(process.env.PORT || 3000, function() {
