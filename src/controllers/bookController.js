@@ -1,15 +1,23 @@
-const AuthorModel= require("../models/authorModel")
+const authorModel = require("../models/authorModel")
+const bookModel= require("../models/bookModel")
 
-const createAuthor= async function (req, res) {
-    let author = req.body
-    let authorCreated = await AuthorModel.create(author)
-    res.send({data: authorCreated})
+const createBook= async function (req, res) {
+    let book = req.body
+    let bookCreated = await bookModel.create(book)
+    res.send({data: bookCreated})
 }
 
-const getAuthorsData= async function (req, res) {
-    let authors = await AuthorModel.find()
-    res.send({data: authors})
+const getBooksData= async function (req, res) {
+    let books = await bookModel.find()
+    res.send({data: books})
 }
 
-module.exports.createAuthor= createAuthor;
-module.exports.getAuthorsData= getAuthorsData;
+// const getBooksWithAuthorDetails = async function (req, res) {
+//     let specificBook = await bookModel.find().populate('author_id')
+//     res.send({data: specificBook})
+
+// }
+
+module.exports.createBook= createBook
+module.exports.getBooksData= getBooksData
+//module.exports.getBooksWithAuthorDetails = getBooksWithAuthorDetails
