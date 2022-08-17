@@ -1,4 +1,5 @@
-const { count } = require("console")
+const { count } = require("console");
+const bookModel = require("../models/bookModel");
 const BookModel= require("../models/bookModel")
 
 const createBook= async function (req, res) {
@@ -6,9 +7,38 @@ const createBook= async function (req, res) {
 
     let savedData= await BookModel.create(data)
     res.send({msg: savedData})
+};
+const bookList=async function(req,res){
+    let allBooks=await BookModel.find().select({bookName:1,authorName:1, id:0});
+    res.send({msg: allBooks})
+
+}
+const getBooksInYear=async function(req,res){
+    let data= req.body
+    let publishYear = await bookModel.find({year:{$eq: req.body.year}}) ;
+res.send({msg:publishYear})
+
+}
+const getParticularBooks=async function(req,res){
+    let data= req.body
+    let specialBook=await BookModel.find({year:2021, bookName:"1st book"});
+    res.send({msg:specialBook})
+}
+const getXINRBooks=async function(req,res){
+    let indianPriceWithSale=await BookModel.find(
+       // {$or:[{"price.indianPrice": "100INR"}, {"price.indianPrice":"200INR"},{"price.indianPrice":"500INR"}]}
+       {"price.indianPrice":{$in:["100NIR","200NIR","500NIR"]}}
+       )
+    res.send({msg: indianPriceWithSale});
+}
+const getRandomBooks=async function(req,res){
+    let page= req.query.page
+    let randomBooks=await BookModel.find({$or:[{stockAvailable: true},{totalPages:{$gt: 500}}]})
+    res.send({msg:randomBooks})
 }
 
 const getBooksData= async function (req, res) {
+
 
     // let allBooks= await BookModel.find( ).count() // COUNT
 
@@ -80,6 +110,10 @@ const getBooksData= async function (req, res) {
     res.send({msg: allBooks})
 }
 
-
-module.exports.createBook= createBook
-module.exports.getBooksData= getBooksData
+module.exports.createBook= createBook;
+module.exports.getBooksData= getBooksData;
+module.exports.bookList=bookList;
+module.exports.getBooksInYear=getBooksInYear;
+module.exports.getParticularBooks=getParticularBooks;
+module.exports.getXINRBooks=getXINRBooks;
+module.exports.getRandomBooks=getRandomBooks;
