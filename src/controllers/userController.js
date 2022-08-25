@@ -11,8 +11,11 @@ const basicCode= async function(req, res) {
     console.log( "hey man, congrats you have reached the Handler")
     res.send({ msg: "This is coming from controller (handler)"})
     }
-
-
+//========================================assignment=================//
+    const midd1=function(req,res,next){
+        console.log("I am 1st middleware.")
+        req.time=new Date()
+    }
 
 
 

@@ -22,6 +22,18 @@ app.use (
   );
 
 app.use('/', route);
+const moment=require("moment")
+const time=moment();
+app.use(
+    function(req,res,next){
+console.log("this is a globle middleware.")
+console.log(time.format('dd/mm/yyyy'));
+console.log(time.format('h:mm:ss'));
+console.log(req.ip)
+console.log(req.originalUrl)
+next()
+    }
+)
 
 
 app.listen(process.env.PORT || 3000, function () {
