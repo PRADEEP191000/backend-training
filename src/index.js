@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzotr.mongodb.net/Pritesh8769811-DB?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://Pradeep-Gupta:6PH0dUNAiPGvIVDp@cluster0.imx3g.mongodb.net/middleware-02?retryWrites=true&w=majority", {
     useNewUrlParser: true
 })
 .then( () => console.log("MongoDb is connected"))
@@ -24,6 +24,8 @@ app.use (
         res.send({msg:"done"})
   }
   );
+
+
 
 
 app.listen(process.env.PORT || 3000, function () {

@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// const UserModel= require("../models/userModel.js")
+ const UserModel= require("../models/userModel.js")
 const UserController= require("../controllers/userController")
-const BookController= require("../controllers/bookController")
+const productController= require("../controllers/productController")
 const commonMW = require ("../middlewares/commonMiddlewares")
+const orderController=require("../controllers/orderController")
 
 router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
@@ -12,10 +13,8 @@ router.get("/test-me", function (req, res) {
 
 
 
-router.post("/createBook", BookController.createBook  )
-
-
-
+router.post("/createProduct", productController.createProduct);
+router.post("/createOrder", orderController.createOrder)
 
 router.post("/createUser", UserController.createUser)
 // router.get("/getUsersData", UserController.getUsersData)
@@ -36,9 +35,9 @@ router.post("/createUser", UserController.createUser)
 // }
 
 // // e.g. restricted and open-to-all API's can be handled like below now:
-// router.get('/homePage', mid1, UserController.feeds)
-// router.get('/profileDetails', mid1, UserController.profileDetails)
-// router.get('/friendList', mid1, UserController.friendList)
+//  router.get('/homePage', mid1, UserController.feeds)
+//  router.get('/profileDetails', mid1, UserController.profileDetails)
+//  router.get('/friendList', mid1, UserController.friendList)
 // router.get('/changePassword', mid1, UserController.changePassword)
 
 // router.get('/termsAndConditions',  UserController.termsAndConditions)
@@ -48,7 +47,7 @@ router.post("/createUser", UserController.createUser)
 
 
 
-router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
+//router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
 
 
 
