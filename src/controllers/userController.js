@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
-const createUser = async function (abcd, xyz) {
+const createUser = async function (req, res) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
   //the second parameter is always the response
-  let data = abcd.body;
+  let data = req.body;
   let savedData = await userModel.create(data);
-  console.log(abcd.newAtribute);
-  xyz.send({ msg: savedData });
+  console.log(req.newAtribute);
+  res.send({ msg: savedData });
 };
 
 const loginUser = async function (req, res) {
@@ -34,7 +34,7 @@ const loginUser = async function (req, res) {
       batch: "thorium",
       organisation: "FUnctionUp",
     },
-    "functionup-thorium"
+    "functionup-plutonium"
   );
   res.setHeader("x-auth-token", token);
   res.send({ status: true, data: token });
@@ -54,7 +54,7 @@ const getUserData = async function (req, res) {
   // Input 1 is the token to be decoded
   // Input 2 is the same secret with which the token was generated
   // Check the value of the decoded token yourself
-  let decodedToken = jwt.verify(token, "functionup-thorium");
+  let decodedToken = jwt.verify(token, "functionup-plutonium");
   if (!decodedToken)
     return res.send({ status: false, msg: "token is invalid" });
 
