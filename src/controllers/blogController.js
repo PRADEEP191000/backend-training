@@ -1,24 +1,24 @@
 const BlogModel = require("../models/blogModel");
 const AuthorModel = require('../models/authorModel');
 
-//**     /////////////////////////      Createblog      //////////////////////       **//
-const createBlog = async (req, res) => {
+//===================================================Createblog===========================================//
+const createBlog = async function(req, res){
     try {
-        // taking data from body
+        //  taking data from body
         const newBlog = req.body;
-
-        //checking that there is data inside body
+        const { title, body, authorId, category, ...rest } = req.body;
+        // checking that there is data inside body
         if (Object.keys(newBlog) == 0) return res.status(404).send({ status: false, msg: "please provide details" })
 
         // checking all the required fields are present or not(sending error msg according to that)
-        if (!newBlog.title) return res.status(400).send({ status: false, msg: "Title is required" });
-        if (!newBlog.body) return res.status(400).send({ status: false, msg: "Body is required" });
-        if (!newBlog.authorId) return res.status(400).send({ status: false, msg: "AuthorId is required" });
-        if (!newBlog.category) return res.status(400).send({ status: false, msg: "Category is required" });
+        if (!title) return res.status(400).send({ status: false, msg: "Title is required" });
+        if (!body) return res.status(400).send({ status: false, msg: "Body is required" });
+        if (!authorId) return res.status(400).send({ status: false, msg: "AuthorId is required" });
+        if (!category) return res.status(400).send({ status: false, msg: "Category is required" });
 
         //finding by authorId
-        let authorId = newBlog['authorId']
-        const validateAuthorId = await AuthorModel.findById(authorId);
+        let findAuthorId = newBlog['authorId']
+        const validateAuthorId = await AuthorModel.findById(findAuthorId);
         //check valid authorId
         if (!validateAuthorId) return res.status(404).send({ status: false, msg: "AuthorId is invalid" });
 
@@ -26,7 +26,7 @@ const createBlog = async (req, res) => {
         const data = await BlogModel.create(newBlog);
 
         if (newBlog.isPublished === true) {
-            data.publishedAt = new Date();
+            data.publishedAt = Date.now();
             data.save();
         }
 
@@ -37,8 +37,9 @@ const createBlog = async (req, res) => {
 }
 
 
-//**     /////////////////////////      getBlogs      //////////////////////       **//
-const getBlogs = async (req, res) => {
+//=======================================================getBlogs==============================================//
+
+const getBlogs = async function(req, res) {
     try {
         // taking all queries from query param
         let queries = req.query;
@@ -50,14 +51,16 @@ const getBlogs = async (req, res) => {
 
         // sending response
         res.status(200).send({ status: true, data: allBlogs });
-    } catch (err) {
+    } 
+    catch (err) {
+        
         res.status(500).send({ status: "error", error: err.message });
     }
 }
 
 
-//**     /////////////////////////      updateBlog      //////////////////////  /blogs/:blogId      **//
-const updateBlog = async (req, res) => {
+//================================================updateblog/blogs/:blogId===============================================//
+const updateBlog = async function(req, res) {
 
     try {
 
@@ -89,7 +92,7 @@ const updateBlog = async (req, res) => {
             { _id: blogId },
             {
                 $push: { tags: details.tags, subcategory: details.subcategory, category: details.category },
-                $set: { title: details.title, body: details.body, authorId: details.authorId, isPublished: true, publishedAt: Date.now() }
+                $set: { title: details.title, body: details.body, authorId: details.authorId, isPublished: true, publishedAt: new Date() }
             },
             { new: true }
         );
@@ -100,8 +103,9 @@ const updateBlog = async (req, res) => {
 }
 
 
-//**     /////////////////////////      deleteBlog      //////////////////////  /blogs/:blogId      **//
-const deleteBlogById = async (req, res) => {
+//======================================================delete/bloggs/:blogId==============================================//
+
+const deleteBlogById = async function(req, res) {
     try {
         // blogId from middlewares/authorise
         let blogId = req.blogId;
@@ -134,8 +138,8 @@ const deleteBlogById = async (req, res) => {
 }
 
 
-//**     /////////////////////////      deleteBlog      //////////////////////  /blogs?queryParams      **//
-const deleteBlogByQueryParam = async (req, res) => {
+//==========================================================deleteBlog/blogs?queryParams=========================================//
+const deleteBlogByQueryParam = async function(req, res) {
     try {
         // taking queries
         let queries = req.query;

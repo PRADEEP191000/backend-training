@@ -2,6 +2,7 @@ const JWT = require('jsonwebtoken')
 const AuthorModel = require('../models/authorModel')
 const BlogModel = require('../models/blogModel')
 
+//=============================================================authentication======================================//
 
 // ### Authentication
 // - Add an authorisation implementation for the JWT token that validates the token before every protected endpoint is called. If the validation fails, return a suitable error message with a corresponding HTTP status code
@@ -9,7 +10,7 @@ const BlogModel = require('../models/blogModel')
 // - Set the token, once validated, in the request - `x-api-key`
 // - Use a middleware for authentication purpose.
 
-const authenticateAuthor = async (req, res, next) => {
+const authenticateAuthor = async function(req, res, next) {
     try {
         // extracting the token from request's headers
         let token = req.headers['x-api-key']
@@ -33,6 +34,7 @@ const authenticateAuthor = async (req, res, next) => {
     }
 }
 
+//=============================================================authorisation=================================================//
 
 // ### Authorisation
 // - Make sure that only the owner of the blogs is able to edit or delete the blog.

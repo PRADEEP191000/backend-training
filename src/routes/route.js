@@ -2,14 +2,19 @@
 const express = require('express');
 const router = express.Router();
 
+
+
+
 // importing controllers
+
 const Middlewares = require('../middlewares/commonMiddleware')
 const AuthorController = require("../controllers/authorController");
 const BlogController = require("../controllers/blogController");
 
 
 
-//**    APIS   **//
+
+//===================================================APIS=====================================================//
 
 // Author apis
 router.post("/login", AuthorController.login);
@@ -22,7 +27,7 @@ router.put('/blogs/:authorId/:blogId', Middlewares.authenticateAuthor, Middlewar
 
 // delete apis
 router.delete('/blogs/:authorId/:blogId', Middlewares.authenticateAuthor, Middlewares.authoriseAuthor, BlogController.deleteBlogById);
-router.delete('/blogs/:authorId', Middlewares.authenticateAuthor, Middlewares.authoriseAuthor, BlogController.deleteBlogByQueryParam);
+router.delete('/blog/:authorId', Middlewares.authenticateAuthor, Middlewares.authoriseAuthor, BlogController.deleteBlogByQueryParam);
 
 
 
