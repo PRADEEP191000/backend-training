@@ -57,7 +57,7 @@ const authoriseAuthor = async (req, res, next) => {
 
         // finding the blog with blogId inside BlogModel
         let validateBlogId = await BlogModel.findById(blogId)
-        // if (!validateBlogId) return res.status(404).send({ status: false, msg: "invalid blogId" });
+        if (!validateBlogId) return res.status(404).send({ status: false, msg: "invalid blogId" });
 
         // sending values
         // userId found from token

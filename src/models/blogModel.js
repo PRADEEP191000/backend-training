@@ -19,7 +19,7 @@ const blogSchema = new mongoose.Schema({
         ref: "Author",
         required: 'Author Id is required'
     },
-    tags: [{ type: String, trim: true }],
+    tags:[{ type: String, trim: true }],
 
     category: [
         {

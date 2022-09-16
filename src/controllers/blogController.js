@@ -26,7 +26,7 @@ const createBlog = async function(req, res){
         const data = await BlogModel.create(newBlog);
 
         if (newBlog.isPublished === true) {
-            data.publishedAt = Date.now();
+            data.publishedAt = new Date();
             data.save();
         }
 

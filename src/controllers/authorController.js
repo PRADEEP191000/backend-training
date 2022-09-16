@@ -10,26 +10,27 @@ const AuthorModel = require("../models/authorModel")
 const createAuthor = async function(req, res){
     try {
         // taking document from body (using destructuring)
-       // let {author, fname, lname, title, email, password} = req.body;
+       
         let author = req.body;
+         let { fname, lname, title, email, password, ...rest} = req.body;
     
         // as empty object gives truthy value , so we declarin if there is no keys return nothing found
      
         if (Object.keys(author) == 0) return res.status(404).send({ status: false, msg: "nothing found from body"});
 
         // checking all the required fields are present or not(sending error msg according to that)
-        if (!author.fname) return res.status(400).send({ status: false, msg: "First name is required"});
-        if (!author.lname) return res.status(400).send({ status: false, msg: "Last name is required"});
-        if (!author.title) return res.status(400).send({ status: false, msg: "Title is required"});
-        if (!author.email) return res.status(400).send({ status: false, msg: "Email is required"});
-        if (!author.password) return res.status(400).send({ status: false, msg: "Password is required"});
+        if (!fname) return res.status(400).send({ status: false, msg: "First name is required"});
+        if (!lname) return res.status(400).send({ status: false, msg: "Last name is required"});
+        if (!title) return res.status(400).send({ status: false, msg: "Title is required"});
+        if (!email) return res.status(400).send({ status: false, msg: "Email is required"});
+        if (!password) return res.status(400).send({ status: false, msg: "Password is required"});
 
 
         // validating fields with REGEX formats
-        const validateFName = (/^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i.test(author.author));
-        const validateLName = (/^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i.test(author.lname));
-        const validateEmail = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(author.email));
-        const validatePassword = (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$/.test(author.password))
+        const validateFName = (/^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i.test(fname));
+        const validateLName = (/^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i.test(lname));
+        const validateEmail = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email));
+        const validatePassword = (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$/.test(password))
 
 
         if (!validateFName) return res.status(400).send({ status: false, msg: "First Name is invalid, Please check your First Name"});
@@ -41,6 +42,7 @@ const createAuthor = async function(req, res){
         let authorCreated = await AuthorModel.create(author);
         res.status(201).send({ status: true, data: authorCreated });
     } catch (err) {
+        
         res.status(500).send({ status: "error", error: err.message });
     }
 }
@@ -77,7 +79,7 @@ const login = async function(req, res){
             {
                 userId: Author._id.toString(),
                 creationTime: Date.now(),
-                type: 'blogging-site-project'
+                type: 'blogging-site-project',
             },
 
             "-- plutonium-- project-blogging-site -- secret-token --"
